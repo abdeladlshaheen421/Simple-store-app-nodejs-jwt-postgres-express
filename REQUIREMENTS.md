@@ -4,45 +4,50 @@ The company stakeholders want to create an online storefront to showcase their g
 
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application.
 API Endpoints
-Products
-
-    1. Index
-    2. Show
-    3. Create [token required]
-    4. [OPTIONAL] Top 5 most popular products
-    5. [OPTIONAL] Products by category (args: product category)
+    1. Index => http://localhost:3000/
+    2. Show  => http://localhost:3000/
+    3. Create [token required]  => http://localhost:3000/
+    4. [OPTIONAL] Top 5 most popular products => http://localhost:3000/
+    5. [OPTIONAL] Products by category (args: product category) =>  http://localhost:3000/
 
 #Users
 
-    Index [token required]
-    Show [token required]
-    Create N[token required]
+    Index [token required] => http://localhost:3000/
+    Show [token required] => http://localhost:3000/
+    Create N[token required] => http://localhost:3000/
 
 #Orders
 
-    Current Order by user (args: user id)[token required]
-    [OPTIONAL] Completed Orders by user (args: user id)[token required]
+    Current Order by user (args: user id)[token required] => http://localhost:3000/
+    [OPTIONAL] Completed Orders by user (args: user id)[token required] => http://localhost:3000/
 
 Data Shapes
 ##Product
+### Column | Type
 ---
-    * id
-    * name
-    * price
-    * [OPTIONAL] category
+    * id | int
+    * name | varchar
+    * price | float
+    * [OPTIONAL] category | varchar
 ---
 ##User
+### Column | Type
 ---
-    * id
-    * firstName
-    * lastName
-    * password
+    * id  | int
+    * firstName | varchar
+    * lastName | varchar
+    * password | varchar
 ---
 ##Orders
+### Column | Type
 ---
-    * id
-    * id of each product in the order
-    * quantity of each product in the order
-    * user_id
-    * status of order (active or complete)
+    * id | int
+    * product_id   | int  (fk) for product table
+    * quantity  | int 
+    * user_id | int (fk) for users table
+    * status | varchar
 ---
+##order_products
+### Column | Type
+* id | int 
+* product_id | int (fk)
