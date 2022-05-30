@@ -6,9 +6,11 @@
   "scripts": {
     "start": "nodemon src/server.ts",
     "build": "npx tsc",
-    "jasmine": "jasmine",
+    "jasmine": "ENV=test db-migrate --env test up && jasmine && db-migrate --env test down",
     "tsc": "tsc",
-    "test": "jasmine-ts",
+    "db-up": "db-migrate up",
+    "db-down": "db-migrate down",
+    "test": "npm run build && npm run jasmine",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./build --onSuccess \"node ./build/server.js\""
   },
   "keywords": [],
