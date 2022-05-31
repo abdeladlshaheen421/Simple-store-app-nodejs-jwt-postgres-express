@@ -1,0 +1,16 @@
+show databases;
+\dt
+\d
+/d
+\d
+\t
+\d
+\p
+\x
+\dt
+\r
+\t
+\o
+\p
+\a
+\s

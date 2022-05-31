@@ -17,7 +17,7 @@ userRouter.route('/users')
         return res.json({message:error})
     }
 })
-.post(auth.validateData,async (req:Request,res:Response):Promise<Response>=>{
+.post(auth.validateData,auth.isAuthenticated,async (req:Request,res:Response):Promise<Response>=>{
     try{
         const user:User = req.body
         const newUser = await model.create(user.firstName,user.lastName,user.password)

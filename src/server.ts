@@ -25,3 +25,5 @@ app.use((err:Error,req:Request,res:Response,next:NextFunction) : Response => {
 app.use((req:Request,res:Response,next:NextFunction) : Response => {
     return res.status(404).json({err: 'Not Found'})
 })
+
+export default app
