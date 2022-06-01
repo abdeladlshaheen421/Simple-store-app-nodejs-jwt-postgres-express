@@ -37,6 +37,36 @@ export class userModel{
             throw new Error(`error with creating a user ${error}`);
         }
     }
+    async login(firstName:string,password:string):Promise<User>{
+        try{
+            const conn = await client.connect()
+            const sql:string = 'SELECT * FROM users WHERE firstName=$1'
+            const res:QueryResultRow = await conn.query(sql, [firstName])
+            const user:User = res.rows[0]
+            const isPasswordValid = bcrypt.compareSync(password+BCRYPT_PASSWORD,user.password)
+            if(isPasswordValid){
+                return user
+            }
+            else{
+                throw new Error('invalid password')
+            }
+        }
+        catch(error){
+            throw new Error(`error with logging in ${error}`);
+        }
+    }
+    async register(firstName:string,lastName:string,password:string):Promise<User>{
+        try{
+            const conn = await client.connect()
+            const hashPassword = bcrypt.hashSync(password+BCRYPT_PASSWORD,parseInt(<string>SALT_ROUNDS))
+            const sql:string = 'INSERT INTO users (firstName, lastName, password) VALUES ($1, $2, $3) RETURNING *'
+            const res:QueryResultRow = await conn.query(sql, [firstName, lastName, hashPassword])
+            return res.rows[0]
+        }
+        catch(error){
+            throw new Error(`error with creating a user ${error}`);
+        }
+    }
     async show(userId:number):Promise<User>{
         try{
             const conn = await client.connect()

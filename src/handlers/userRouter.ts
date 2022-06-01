@@ -40,4 +40,32 @@ userRouter.route('/users/:userId')
         return res.json({message:error})
     }
 })
+
+userRouter.route('/users/login')
+.post(auth.validateData,async (req:Request,res:Response):Promise<Response>=>{
+    try{
+        const user:User = req.body
+        const foundUser = await model.login(user.firstName,user.password)
+        const token = jwt.sign({user:foundUser},<string>SECRET_KEY)
+        return res.json({foundUser,token})
+    }
+    catch(error){
+        console.error(error)
+        return res.json({message:error})
+    }
+})
+userRouter.route('/users/register')
+.post(auth.validateData,async (req:Request,res:Response):Promise<Response>=>{
+    try{
+        const user:User = req.body
+        const newUser = await model.register(user.firstName,user.lastName,user.password)
+        const token = jwt.sign({user:newUser},<string>SECRET_KEY)
+        return res.json({newUser,token})
+    }
+    catch(error){
+        console.error(error)
+        return res.json({message:error})
+    }
+})
+
 export default userRouter

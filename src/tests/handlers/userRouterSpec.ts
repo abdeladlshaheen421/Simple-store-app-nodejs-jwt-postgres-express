@@ -15,4 +15,10 @@ describe('userRouter',()=>{
         const response = await request.get('/users/1')
         expect(response.status).toBe(401)
     })
+
+    it('should be able to login a user',async ()=>{
+        const response = await request.post('/users/login').send({firstName:'test',password:'test'})
+        expect(response.status).toBe(200)
+    })
+
 })
