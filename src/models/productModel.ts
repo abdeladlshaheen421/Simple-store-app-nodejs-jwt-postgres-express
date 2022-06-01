@@ -13,6 +13,7 @@ export class productModel {
             const conn = await client.connect()
             const sql:string = 'SELECT * FROM products'
             const res:QueryResultRow = await conn.query(sql)
+            conn.release()
             return res.rows
         }
         catch(error){
@@ -26,6 +27,7 @@ export class productModel {
             const conn = await client.connect()
             const sql:string = 'INSERT INTO products (name, price, category) VALUES ($1, $2, $3) RETURNING *'
             const res:QueryResultRow = await conn.query(sql, [name, price, category])
+            conn.release()
             return res.rows[0]
         }
         catch(error){
@@ -40,6 +42,7 @@ export class productModel {
             const sql:string = 'SELECT * FROM products WHERE id = $1'
             const res:QueryResultRow = await conn.query(sql, [id])
             console.log('2')
+            conn.release()
             return res.rows[0]
         }
         catch(error){
@@ -53,6 +56,7 @@ export class productModel {
             const sql:string = 'SELECT COUNT(*) AS popular , products.id,name ,price, category FROM orders INNER JOIN products  ON products.id = orders.product_id GROUP BY products.id ORDER BY popular DESC LIMIT 5'
             const res:QueryResultRow = await conn.query(sql)
             console.log('10')
+            conn.release()
             return res.rows
         }
         catch(error){
@@ -65,7 +69,7 @@ export class productModel {
             const conn = await client.connect()
             const sql:string = 'SELECT * FROM products WHERE category = $1'
             const res:QueryResultRow = await conn.query(sql, [category])
-            
+            conn.release()
             return res.rows
         }
         catch(error){
