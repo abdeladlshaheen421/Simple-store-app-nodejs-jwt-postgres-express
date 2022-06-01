@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/server.ts",
     "build": "npx tsc",
-    "jasmine": "ENV=test db-migrate --env test up && jasmine && db-migrate --env test down",
+    "jasmine": "db-migrate --env test up && ENV=test jasmine && db-migrate --env test down",
     "tsc": "tsc",
     "db-up": "db-migrate up",
     "db-down": "db-migrate down",

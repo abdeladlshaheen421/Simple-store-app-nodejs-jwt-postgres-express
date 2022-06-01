@@ -13,7 +13,7 @@ const isAuthenticated = (req:Request, res:Response, next:NextFunction) => {
         
         next()
     }catch(error){
-        res.status(401).json({error:'Access Denied , error with Token'})
+        return res.status(401).json({error:'Access Denied , error with Token'})
     }
 }
 

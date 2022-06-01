@@ -9,26 +9,30 @@ dotenv.config()
 const {SECRET_KEY}=process.env
 const model = new orderModel()
 orderRouter.route('/orders')
-.get(auth.isAuthenticated,async (req:Request,res:Response,next:NextFunction):Promise<Response>=>{
+.get(auth.isAuthenticated,async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
     try{
         const userId = getUserId(req)
         const orders:Order[] = await model.getCurrentOrders(userId)
-        return res.json(orders)
+        res.json(orders)
+        return
     }
     catch(error)
     {
-        return res.status(500).json({error: 'error with getting current orders'})
+        next(`error ${error}`)
+        return
     }
 })
 orderRouter.route('/orders/completed')
-.get(auth.isAuthenticated,async (req:Request,res:Response):Promise<Response>=>{
+.get(auth.isAuthenticated,async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
     try{
         const userId = getUserId(req)
         const orders:Order[] = await model.getCompletedOrders(userId)
-        return res.json(orders)
+        res.json(orders)
+        return
     }
     catch(error){
-        return res.status(500).json({error:'error with getting completed orders'})
+        next(`error ${error}`)
+        return
     }
 })
 const getUserId = (req:Request):number =>{

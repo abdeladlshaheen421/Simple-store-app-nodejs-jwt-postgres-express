@@ -16,6 +16,7 @@ export class orderModel {
             return res.rows
         }
         catch(error){
+            console.log(error)
             throw new Error(`error with getting current orders ${error}`);
         }
     }
@@ -27,6 +28,7 @@ export class orderModel {
             return res.rows
         }
         catch(error){
+            console.log(error)
             throw new Error(`error with getting completed orders ${error}`);
         }
     }
