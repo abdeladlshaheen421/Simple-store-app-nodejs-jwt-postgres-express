@@ -7,13 +7,12 @@ describe('product router',()=>{
     let token: string
     beforeAll( async()=>{
         await request.post('/users/register').send({firstName:'testuser',lastName:'testuser',password:'testuser'})
-    })
-    it ('user can login Successfully', async()=>{
         const response = await request.post('/users/login').send({firstName:'testuser',password:'testuser'})
         token = response.body.token
     })
+
     it ('user should able to register', async()=>{
-        const response = await request.post('/users/register').send({firstName:'testuser',lastName:'testuser',password:'testuser'})
+        const response = await request.post('/users/register').send({firstName:'testuser2',lastName:'testuser2',password:'testuser2'})
         expect(response).toBeDefined()
     })
     it('it should be able to create a product',async ()=>{
