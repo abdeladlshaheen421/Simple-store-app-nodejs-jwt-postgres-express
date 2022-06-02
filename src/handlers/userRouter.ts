@@ -42,7 +42,7 @@ userRouter.route('/users/:userId')
 })
 
 userRouter.route('/users/login')
-.post(auth.validateData,async (req:Request,res:Response):Promise<Response>=>{
+.post(async (req:Request,res:Response):Promise<Response>=>{
     try{
         const user:User = req.body
         const foundUser = await model.login(user.firstName,user.password)

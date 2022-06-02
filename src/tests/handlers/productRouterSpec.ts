@@ -1,15 +1,33 @@
 import supertest,{Response,Test} from "supertest"
 import app from "./../../server"
+import userRouter from './../../handlers/userRouter'
+import { log } from "console"
 const request: supertest.SuperTest<Test> = supertest(app)
 describe('product router',()=>{
-    
+    let token: string
+    beforeAll( async()=>{
+        await request.post('/users/register').send({firstName:'testuser',lastName:'testuser',password:'testuser'})
+    })
+    it ('user can login Successfully', async()=>{
+        const response = await request.post('/users/login').send({firstName:'testuser',password:'testuser'})
+        token = response.body.token
+    })
+    it ('user should able to register', async()=>{
+        const response = await request.post('/users/register').send({firstName:'testuser',lastName:'testuser',password:'testuser'})
+        expect(response).toBeDefined()
+    })
+    it('it should be able to create a product',async ()=>{
+        const response = await request.post('/products').send({name:'test',price:10,category:'test'}).set('authorization',`Bearer ${token}`)
+        expect(response.status).toBe(200)
+    })
+
     it('it should return array of products',async()=>{
         const response = await request.get('/products')
         expect(response.status).toBe(200)
     })
     it('it should be able to create a product',async ()=>{
-        const response = await request.post('/products').send({name:'test',price:10,category:'test'})
-        expect(response.status).toBe(401)
+        const response = await request.post('/products').send({name:'test',price:10,category:'test'}).set('authorization',`Bearer ${token}`)
+        expect(response.status).toBe(200)
     })
     it('it should be able to get a product',async ()=>{
         const response = await request.get('/product/1')
