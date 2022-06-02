@@ -12,7 +12,7 @@ describe('product router',()=>{
         expect(response.status).toBe(401)
     })
     it('it should be able to get a product',async ()=>{
-        const response = await request.get('/product/5')
+        const response = await request.get('/product/1')
         expect(response.status).toBe(200)
     })
     it('it should be able to get all products in a category',async ()=>{
